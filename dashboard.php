@@ -125,6 +125,26 @@ if (!isset($_SESSION['username'])) {
                 <p class="text-sm text-gray-500">View payment history per student / Voir l'historique des paiements par élève.</p>
             </a>
 
+
+             <!-- Record Other Income -->
+<a href="record_income.php"
+   class="p-6 bg-white rounded-2xl border shadow hover:shadow-lg transition transform hover:scale-[1.02]">
+
+    <div class="flex items-center justify-between mb-3">
+        <i class="fa-solid fa-hand-holding-dollar text-green-600 text-3xl"></i>
+    </div>
+
+    <h3 class="text-lg font-semibold text-gray-800">
+        Record Other Income / Enregistrer les Autres Revenus
+    </h3>
+
+    <p class="text-sm text-gray-500">
+        Record donations, grants, sponsorships, rentals and other income / Enregistrer les dons, subventions, parrainages, locations et autres revenus.
+    </p>
+
+</a>
+       
+
             <!-- Logout -->
             <a href="logout.php" class="p-6 bg-white rounded-2xl border shadow hover:shadow-lg transition transform hover:scale-[1.02]">
                 <div class="flex items-center justify-between mb-3">

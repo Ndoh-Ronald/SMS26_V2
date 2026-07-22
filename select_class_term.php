@@ -2,20 +2,31 @@
 session_start();
 require_once __DIR__ . '/schooldb.php';
 
-// Restrict to logged-in users (Admin or Teacher)
-if (!isset($_SESSION['username']) || !in_array(strtolower($_SESSION['role']), ['admin', 'teacher'])) {
+// Restrict access
+if (
+    !isset($_SESSION['username']) ||
+    !isset($_SESSION['role']) ||
+    !in_array(strtolower($_SESSION['role']), ['admin','teacher'])
+){
     header("Location: login.php");
     exit;
 }
 
-// Fetch distinct classes from students table
-$classes = [];
-$class_query = $pdo->query("SELECT DISTINCT class FROM students ORDER BY class ASC");
-while ($row = $class_query->fetch_assoc()) {
-    $classes[] = $row['class'];
-}
+/*
+|--------------------------------------------------------------------------
+| Fetch Classes
+|--------------------------------------------------------------------------
+| If your database has a classes table (recommended)
+*/
 
-// Default year
+$stmt = $pdo->query("
+    SELECT id, class_name
+    FROM classes
+    ORDER BY class_name ASC
+");
+
+$classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $current_year = date('Y');
 ?>
 
@@ -36,8 +47,10 @@ $current_year = date('Y');
             <select name="class" required class="w-full border rounded px-3 py-2">
                 <option value="">-- Choose Class --</option>
                 <?php foreach ($classes as $class): ?>
-                    <option value="<?= htmlspecialchars($class) ?>"><?= htmlspecialchars($class) ?></option>
-                <?php endforeach; ?>
+<option value="<?= $class['id'] ?>">
+    <?= htmlspecialchars($class['class_name']) ?>
+</option>
+<?php endforeach; ?>
             </select>
         </div>
 
